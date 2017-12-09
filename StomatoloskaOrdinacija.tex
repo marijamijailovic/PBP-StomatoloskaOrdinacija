@@ -101,9 +101,20 @@ Odgovarajuc1i dijagram dat je na slici \ref{fig:dijagram}
 	\item Trigeri: 
 		\begin{itemize}
 			\item Nakon obavljene intervencije azhurira se dug pacijenta prema ordinaciji.
-			\item Nakon odredjenog broja zahvata(npr.5) Zaposlenom se uvec1ava radno iskustvo za odredjeni broj(npr.20\%). 
+			\item Nakon odredjenog broja zahvata(npr.10) Zaposlenom se uvec1ava radno iskustvo za odredjeni broj(npr.20\%). 
 		\end{itemize}	
 \end{itemize}
+
+
+\textbf{Upiti:}
+\begin{enumerate}
+	\item Izlistavanje svih zahvata odradjenih nad pacijentom(ime/prezime pacijenta se unosi sa standardnog ulaza).
+	\item Unos novog zahvata(Nakon izlistanih svih zahvata datog pacijenta,bira se prvo oblast intervencije, zatim se izlistavaju intervencije koje pripadaju unetoj oblasti i bira se intervencija(idSpisak). Potom se unosi Datum kada je zahvat izvrshen, Zub nad kojim je izvrshen zahvat ili null, ako nije izvrsheno nad zubom vec1 nad aparatom(fiksnim ili pokretnim), i ko je izvrshio zahvat(tehnichar ili stomatolog). Pri ovom upitu se aktivira triger1 , i aktivirac1e se i triger 2 ako je broj zahvata zaposlenog vec1i od 10. 
+	\item Azhuriranje podataka u okviru Pacijenta 
+	\item Unos novog pacijenta(svi podaci se unose sa standardnog ulaza).
+	\item Unos novog zatechenog stanja(svi podaci se unose sa standardnog ulaza).
+	\item Brisanje Materijala, Pacijenta...
+\end{enumerate}
 
 \begin{figure}[H]
 	\centering
