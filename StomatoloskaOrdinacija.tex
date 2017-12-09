@@ -65,30 +65,43 @@
 \newpage
 \section{Opis baze}
 
+
 \textbf{Stomatoloshka ordinacija} chuva sledec1e informacije:
 \begin{itemize} 
 	\item Pacijent(idPacijent, Ime, Prezime, DatumRodjenja, Adresa, Telefon, DatumOtvaranjaKartona, UkupanDug, Plac1eno, Napomena),
-	\item PochetnoStanje(idPochetnoStanje, Zub0-Zub31),
-	\item Zaposlen(idZaposleni, Ime, Prezime), 
+	\item ZatechenoStanje(idPacijent, Zub0-Zub31),
+	\item Zaposleni(idZaposlenog, Ime, Prezime),
+	\item Stomatolog(idStomatologa, Status, RadnoIskustvo),
+	\item Tehnichar(idTehnichara, RadnoIskustvo), 
 	\item Zub(idZub), 
-	\item Bolest(idBolest, OpisBolesti),
+	\item Materijal(idMaterijal, Naziv),
 	\item Stolica(idOprema, BrojStolice), 
-	\item Intervenca(idIntervencija, Datum) 
-	\item SpisakIntervencija(idSpisak, NazivIntervencije, Cena),
-	\item OblastIntervencije(idOblast, NazivOblasti)
+	\item Zahvat(shifra, idPacijent, Datum, idSpisak, idZub, idStomatolog,  idTehnichar) 
+	\item SpisakIntervencija(idSpisak, NazivIntervencije, Cena, idOblastInt),
+	\item OblastIntervencije(idOblastInt, NazivOblasti)
 \end{itemize}
-Zaposlen u ordinaciji mozhe biti Tehnichar ili Stomatolog, za Stomatologa se chuva josh i informacija o statusu zaposlenja. Pacijent je osoba koja dolazi u ordinaciju radi obavljanja intervencije, za svakog pacijenta se chuva informacija o pochetnom stanju svih zuba, sa kojim je doshao prvi put u ordinaciju. Nad jednim pacijentom se mozhe obaviti vishe intervencija, dok jedna intervencija odgovara jednom pacijentu. Stomatolog mozhe da izvrshi jednu ili vishe intervencija nad pacijentom. Dok tehnichar mozhe, ali i ne mora da izvrshi intervenciju nad pacijentom. Jedna intervencija se mozhe obaviti na vishe stolica, a na stolici mozhe biti obavljeno vishe intervencija,medjutim ne mora biti obavljena ni jedna. Spisak intervencija sadrzhi vishe intervencija, ali mora imati bar jednu. Svaka intervencija sa spiska intervencija pripada tachno jednoj oblasti intervencija. Nad jednim zubom mozhe biti izvrsheno vishe intervencija. Takodje svaki zub mozhe imati i jednu ili vishe bolesti. Dok bolest moze zahvatiti vishe zuba,ali ne mora ni jedan. Odgovarajuc1i dijagram dat je na slici \ref{fig:dijagram}
+
+Zaposlen u ordinaciji mozhe biti Tehnichar ili Stomatolog, za Stomatologa se chuva josh i informacija o statusu zaposlenja, moguc1e vrednosti statusa zaposljenja bi bile: stalan radni odnos, privremen radni odnos, praksa i sl. 
+
+Za svakog pacijenta se chuva informacija o njegovom zatechenom stanju svih zuba kada je prvi put doshao na pregled, i ti podaci se dalje ne menjaju. 
+Svaki pacijent ima svoje zatecheno stanje.
+
+Nad jednim pacijentom se mozhe obaviti vishe zahvata, dok jedan zahvat odgovara jednom pacijentu. Stomatolog mozhe da izvrshi jedan ili vishe zahvata nad pacijentom. Dok tehnichar mozhe , ali i ne mora da izvrshi zahvat nad pacijentom. Jedan zahvat se obavlja na jednoj stolici, dok na stolici mozhe biti obavljeno vishe zahvata, medjutim ne mora biti obavljen ni jedan. Za zahvat se chuva shifra zahvata i to je identifikacija zahvata, kako bi mogli da izvrshimo vishe zahvata u toku jednog dana nad istim pacijentom.  Prilikom zahvata pamtimo i nad kojim zubom je izvrshen zahvat. Nad jedinim zubom jednog pacijenta mozhe se izvrshiti vishe zahvata.
+
+Svaki zahvat se nalazi na spisku intervencija. Spisak intervencija sadrzhi vishe zahvata, ali mora imati bar jedan zahvat. Svaki zahvat sa spiska intervencija pripada tachno jednoj oblasti. Za svaki zahvat sa Spiska intervencije se chuva i informacija koji je materijal potreban za taj zahvat. Jednoj intervenciji mozhe biti potrebno vishe materijala, dok jedan materijal se mozhe upotrebiti za vishe intervencija.
+
+Odgovarajuc1i dijagram dat je na slici \ref{fig:dijagram}
 \\
 \\
 \textbf{Zadovoljenost uslova:}
 \begin{itemize}
-	\item Nezavisni entiteti: Zaposleni, Pacijent, Stolica, OblastIntervencije, Bolest
-	\item Agregirani entiteti: Obavlja, Ima
-	\item Zavisni entiteti: Intervencija, Pochetno stanje
+	\item Nezavisni entiteti: Zaposleni, Pacijent, Stolica, OblastIntervencije, Materijal
+	\item Agregirani entiteti: Obavlja, Koristi
+	\item Zavisni entiteti: Zatecheno stanje
 	\item Trigeri: 
 		\begin{itemize}
 			\item Nakon obavljene intervencije azhurira se dug pacijenta prema ordinaciji.
-			\item Promena cene intervencije vazhi od dana izmene.
+			\item Nakon odredjenog broja zahvata(npr.5) Zaposlenom se uvec1ava radno iskustvo za odredjeni broj(npr.20\%). 
 		\end{itemize}	
 \end{itemize}
 
