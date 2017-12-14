@@ -12,7 +12,7 @@ DROP SCHEMA IF EXISTS `StomatoloskaOrdinacija` ;
 -- -----------------------------------------------------
 -- Schema StomatoloskaOrdinacija
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `StomatoloskaOrdinacija` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `StomatoloskaOrdinacija` DEFAULT CHARACTER SET utf8;
 USE `StomatoloskaOrdinacija` ;
 
 -- -----------------------------------------------------
@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Pacijent` (
   `Adresa` VARCHAR(45) NOT NULL,
   `Telefon` VARCHAR(20) NOT NULL,
   `DatumOtvaranjaKartona` DATE NOT NULL,
-  `UkupanDug` INT NOT NULL,
-  `Placeno` TINYINT(1) NOT NULL,
-  `Napomena` TEXT NOT NULL,
+  `UkupanDug` INT NOT NULL DEFAULT 0,
+  `Placeno` TINYINT(1) NOT NULL DEFAULT 1,
+  `Napomena` TEXT NULL,
   PRIMARY KEY (`idPacijent`))
 ENGINE = InnoDB;
 
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Stomatolog` (
   CONSTRAINT `fk_Stomatolog_Zaposleni1`
     FOREIGN KEY (`idStomatologa`)
     REFERENCES `StomatoloskaOrdinacija`.`Zaposleni` (`idZaposlenog`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -102,15 +102,15 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`SpisakIntervencija` (
   `idSpisak` INT NOT NULL AUTO_INCREMENT,
   `NazivIntervencije` VARCHAR(45) NOT NULL,
-  `Cena` DOUBLE NOT NULL,
+  `Cena` INT NOT NULL,
   `idOblastInt` INT NOT NULL,
   PRIMARY KEY (`idSpisak`),
   INDEX `fk_Spisak_Intervencija_OblastIntervencije1_idx` (`idOblastInt` ASC),
   CONSTRAINT `fk_Spisak_Intervencija_OblastIntervencije1`
     FOREIGN KEY (`idOblastInt`)
     REFERENCES `StomatoloskaOrdinacija`.`OblastIntervencije` (`idOblastInt`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -134,28 +134,28 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Zahvat` (
   CONSTRAINT `fk_Intervencija_Pacijent1`
     FOREIGN KEY (`idPacijent`)
     REFERENCES `StomatoloskaOrdinacija`.`Pacijent` (`idPacijent`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Intervencija_Intervencije1`
     FOREIGN KEY (`idSpisak`)
     REFERENCES `StomatoloskaOrdinacija`.`SpisakIntervencija` (`idSpisak`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Intervencija_Zub1`
     FOREIGN KEY (`idZub`)
     REFERENCES `StomatoloskaOrdinacija`.`Zub` (`idZub`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Intervencija_Stomatolog1`
     FOREIGN KEY (`idStomatologa`)
     REFERENCES `StomatoloskaOrdinacija`.`Stomatolog` (`idStomatologa`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Intervencija_Tehnicar1`
     FOREIGN KEY (`idTehnicara`)
     REFERENCES `StomatoloskaOrdinacija`.`Tehnicar` (`idTehnicara`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -181,13 +181,13 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Obavlja` (
   CONSTRAINT `fk_Stolica_has_Intervencija_Stolica1`
     FOREIGN KEY (`idOprema`)
     REFERENCES `StomatoloskaOrdinacija`.`Stolica` (`idOprema`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Stolica_has_Intervencija_Intervencija1`
     FOREIGN KEY (`Sifra`)
     REFERENCES `StomatoloskaOrdinacija`.`Zahvat` (`Sifra`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -233,8 +233,8 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`ZatecenoStanje` (
   CONSTRAINT `fk_PocetnoStanje_Pacijent1`
     FOREIGN KEY (`idPacijent`)
     REFERENCES `StomatoloskaOrdinacija`.`Pacijent` (`idPacijent`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -243,7 +243,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Materijal` (
   `idMaterijal` INT NOT NULL AUTO_INCREMENT,
-  `naziv` VARCHAR(60) NOT NULL,
+  `Naziv` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`idMaterijal`))
 ENGINE = InnoDB;
 
@@ -260,13 +260,13 @@ CREATE TABLE IF NOT EXISTS `StomatoloskaOrdinacija`.`Koristi` (
   CONSTRAINT `fk_SpisakIntervencija_has_Materijal_SpisakIntervencija1`
     FOREIGN KEY (`idSpisak`)
     REFERENCES `StomatoloskaOrdinacija`.`SpisakIntervencija` (`idSpisak`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_SpisakIntervencija_has_Materijal_Materijal1`
     FOREIGN KEY (`idMaterijal`)
     REFERENCES `StomatoloskaOrdinacija`.`Materijal` (`idMaterijal`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
