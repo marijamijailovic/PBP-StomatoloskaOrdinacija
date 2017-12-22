@@ -16,13 +16,13 @@ $(PROGS): $(OBJ)
 .PHONY: clean create trigger insert
 
 create:
-	mysql -u root -p  -D mysql <create.sql
+	mysql -u root --password='' -D mysql <create.sql
 
 trigger:
-	mysql -u root -p  -D mysql <trigger.sql
+	mysql -u root --password='' -D mysql <trigger.sql
 
 insert:
-	mysql -u root -p  -D mysql <insert.sql
+	mysql -u root --password='' -D mysql <insert.sql
 
 clean:
 	rm -rf $(PROGS) rm -rf *.o rm -r *~

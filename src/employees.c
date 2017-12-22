@@ -35,7 +35,6 @@ void employees(MYSQL* connection)
 void listEmployees(MYSQL* connection)
 {
   char query[QUERY_SIZE];
-  char name[BUFFER_SIZE];
 
   sprintf(query,"select *\
                 from Zaposleni");

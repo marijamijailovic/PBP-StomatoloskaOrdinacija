@@ -121,7 +121,7 @@ void listPatientCode(MYSQL* connection)
 
   sprintf(query,"select z.Sifra,z.Datum,p.Ime,p.Prezime,\
                     si.NazivIntervencije,oi.NazivOblasti,\
-                    z.idZub,zap.idZaposlenog,zap.Ime\
+                    z.Zub,zap.idZaposlenog,zap.Ime\
                 from Zahvat z join Pacijent p\
                       on z.idPacijent = p.idPacijent\
                       join SpisakIntervencija si\
@@ -178,8 +178,8 @@ void listPatientCode(MYSQL* connection)
         scanf("%s",datum);
 
         printf("Unesite zub(1-32) nad kojim je izvrsen zahvat -1, ako je izvrsen nad pokretnim ili fiksnim aparatom\n");
-        int idZub;
-        scanf("%d",&idZub);
+        int Zub;
+        scanf("%d",&Zub);
 
         printf("Unesite ko je izvrsio zahvat(s/t)\n");
         scanf("%s",answer);
@@ -200,13 +200,13 @@ void listPatientCode(MYSQL* connection)
           scanf("%d",&idZap);
 
           sprintf(query,"insert into Zahvat\
-                        (Sifra,Datum,idPacijent,idSpisak,idZub,idStomatologa)\
+                        (Sifra,Datum,Zub,idPacijent,idSpisak,idStomatologa)\
                           values(0,\'%s\',%d,%d,%d,%d)",\
-                        datum,idPacijent,idSpisak,idZub,idZap);
+                        datum,Zub,idPacijent,idSpisak,idZap);
 
           result = executeQuery(query);
 
-          //mysql_free_result(result);
+          mysql_free_result(result);
         }
         else if(strcmp(answer,"t")==0){
 
@@ -221,29 +221,30 @@ void listPatientCode(MYSQL* connection)
           printf("Unesite redBr tehnicara koji je izvrsio zahvat\n");
           scanf("%d",&idZap);
 
-          if(idZub!=-1){
+          if(Zub!=-1){
             sprintf(query,"insert into Zahvat\
-                          (Sifra,Datum,idPacijent,idSpisak,idZub,idTehnicara)\
+                          (Sifra,Datum,Zub,idPacijent,idSpisak,idTehnicara)\
                           values(0,\'%s\',%d,%d,%d,%d)",\
-                          datum,idPacijent,idSpisak,idZub,idZap);
+                          datum,Zub,idPacijent,idSpisak,idZap);
           }
           else{
             sprintf(query,"insert into Zahvat\
-                          (Sifra,Datum,idPacijent,idSpisak,idZub,idTehnicara)\
-                          values(0,\'%s\',%d,%d,%s,%d)",\
-                          datum,idPacijent,idSpisak,"NULL",idZap);
+                          (Sifra,Datum,Zub,idPacijent,idSpisak,idTehnicara)\
+                          values(0,\'%s\',%s,%d,%d,%d)",\
+                          datum,"NULL",idPacijent,idSpisak,idZap);
           }
 
           result = executeQuery(query);
 
-          //mysql_free_result(result);
+          mysql_free_result(result);
         }
         else{
             printf("Pogresna komanda\n");
             exit(EXIT_FAILURE);
         }
 
-        
+        printf("\n\nIspis za proveru trigera:\n\n");
+
         //Ovaj ispis je samo da se vidi da je triger aktiviran
         sprintf(query,"select *\
                       from Pacijent\
